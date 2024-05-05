@@ -57,34 +57,43 @@ namespace SapDataCopyApp
                 {
                     await conn.OpenAsync(stoppingToken);
 
-                    // データ登録用のDataTable作成
-                    DataTable dataTable = new DataTable();
-                    
-                    // カラム定義の登録
-                    dataTable.Columns.Add("CURRENCY", typeof(string));
-                    dataTable.Columns.Add("CURRENCY_ISO", typeof(string));
-                    dataTable.Columns.Add("ALT_CURR", typeof(string));
-                    dataTable.Columns.Add("VALID_TO", typeof(DateTime));
-                    dataTable.Columns.Add("LONG_TEXT", typeof(string));
-
-                    // SAPから取得したデータをDataTableに登録
-                    foreach (IRfcStructure row in table)
-                    {
-                        DataRow dataRow = dataTable.NewRow();
-
-                        dataRow["CURRENCY"] = row.GetString("CURRENCY");
-                        dataRow["CURRENCY_ISO"] = row.GetString("CURRENCY_ISO");
-                        dataRow["ALT_CURR"] = row.GetString("ALT_CURR");
-                        dataRow["VALID_TO"] = row.GetValue("VALID_TO");
-                        dataRow["LONG_TEXT"] = row.GetString("LONG_TEXT");
-
-                        dataTable.Rows.Add(dataRow);
-                    }
+                    // データ登録用のDataReader作成
+                    SapTableReader reader = new SapTableReader(table);
 
                     // DataTableのデータをDBに登録
                     SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(conn);
                     sqlBulkCopy.DestinationTableName = "CURRENCY_LIST";
-                    await sqlBulkCopy.WriteToServerAsync(dataTable, stoppingToken);
+                    await sqlBulkCopy.WriteToServerAsync(reader, stoppingToken);
+
+
+                    // // データ登録用のDataTable作成
+                    // DataTable dataTable = new DataTable();
+                    //
+                    // // カラム定義の登録
+                    // dataTable.Columns.Add("CURRENCY", typeof(string));
+                    // dataTable.Columns.Add("CURRENCY_ISO", typeof(string));
+                    // dataTable.Columns.Add("ALT_CURR", typeof(string));
+                    // dataTable.Columns.Add("VALID_TO", typeof(DateTime));
+                    // dataTable.Columns.Add("LONG_TEXT", typeof(string));
+                    //
+                    // // SAPから取得したデータをDataTableに登録
+                    // foreach (IRfcStructure row in table)
+                    // {
+                    //     DataRow dataRow = dataTable.NewRow();
+                    //
+                    //     dataRow["CURRENCY"] = row.GetString("CURRENCY");
+                    //     dataRow["CURRENCY_ISO"] = row.GetString("CURRENCY_ISO");
+                    //     dataRow["ALT_CURR"] = row.GetString("ALT_CURR");
+                    //     dataRow["VALID_TO"] = row.GetValue("VALID_TO");
+                    //     dataRow["LONG_TEXT"] = row.GetString("LONG_TEXT");
+                    //
+                    //     dataTable.Rows.Add(dataRow);
+                    // }
+                    //
+                    // // DataTableのデータをDBに登録
+                    // SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(conn);
+                    // sqlBulkCopy.DestinationTableName = "CURRENCY_LIST";
+                    // await sqlBulkCopy.WriteToServerAsync(dataTable, stoppingToken);
                 }
             }
             finally
