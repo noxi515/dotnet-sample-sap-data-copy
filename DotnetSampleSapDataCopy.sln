@@ -8,7 +8,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目
 		global.json = global.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SapDataCopyApp", "src\SapDataCopyApp\SapDataCopyApp.csproj", "{51979E78-F0BE-4E2B-A97C-C58ED12A418B}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{51979E78-F0BE-4E2B-A97C-C58ED12A418B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51979E78-F0BE-4E2B-A97C-C58ED12A418B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51979E78-F0BE-4E2B-A97C-C58ED12A418B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51979E78-F0BE-4E2B-A97C-C58ED12A418B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
